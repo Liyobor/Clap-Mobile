@@ -1,0 +1,8 @@
+*.pt
+*.ptl
+*.pth
+
+/CLAP/__pycache__
+/CLAP/.venv
+/CLAP/.vscode
+/CLAP/test_audio
