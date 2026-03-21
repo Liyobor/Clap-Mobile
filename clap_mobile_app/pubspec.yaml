@@ -64,7 +64,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/model/
+    - assets/model/clap_caption_mobile.ptl
 
   # To add assets to your application, add an assets section, like this:
   # assets:

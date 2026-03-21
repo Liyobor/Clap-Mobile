@@ -1,10 +1,15 @@
 import 'package:clap_mobile_app/home/view.dart';
 import 'package:clap_mobile_app/services/model_holder.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-void main() {
-
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    // DeviceOrientation.portraitDown,
+  ]);
   Get.put(ModelHolder());
   runApp(const MyApp());
 }

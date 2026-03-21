@@ -49,35 +49,39 @@ class ModelCore extends GetxService {
 
   Future<Module> _loadPtlModelFromAsset(String assetPath, String filename) async {
     try {
-      final ByteData bd = await rootBundle.load(assetPath);
-      if (bd.lengthInBytes == 0) {
-        throw Exception("Asset $assetPath is empty!");
+      final dir = await getApplicationSupportDirectory();
+      final filePath = '${dir.path}/$filename';
+      final file = File(filePath);
+
+      // 如果檔案已存在，就不要每次重寫
+      if (!await file.exists()) {
+        final bd = await rootBundle.load(assetPath);
+        if (bd.lengthInBytes == 0) {
+          throw Exception('Asset $assetPath is empty!');
+        }
+
+        // 不做 deep copy，直接取 view
+        final bytes = bd.buffer.asUint8List(
+          bd.offsetInBytes,
+          bd.lengthInBytes,
+        );
+
+        await file.parent.create(recursive: true);
+        await file.writeAsBytes(bytes, flush: false);
+
+        final fileSize = await file.length();
+        if (fileSize != bd.lengthInBytes) {
+          throw Exception(
+            'File wrote $fileSize bytes, expected ${bd.lengthInBytes}',
+          );
+        }
       }
 
-      // Create a deep copy of the bytes to ensure we have a clean buffer and not a view into the APK
-      final Uint8List bytes = Uint8List.fromList(bd.buffer.asUint8List(bd.offsetInBytes, bd.lengthInBytes));
-
-      // Use ApplicationSupportDirectory which is more reliable for internal app files
-      final Directory dir = await getTemporaryDirectory();
-      final String filePath = '${dir.path}/$filename';
-      final File file = File(filePath);
-
-      // Write to file
-      await file.writeAsBytes(bytes, flush: true);
-
-      // Verify file integrity
-      if (!file.existsSync()) {
-        throw Exception("File failed to write to $filePath");
-      }
-      final int fileSize = await file.length();
-      if (fileSize != bytes.length) {
-        throw Exception("File wrote $fileSize bytes, expected ${bytes.length}");
-      }
-
-      customDebugPrint("Model loaded: $assetPath, size: ${bytes.length}, saved to: $filePath");
-      return await FlutterPytorchLite.load(filePath);
+      customDebugPrint('Loading model from: $filePath');
+      _module = await FlutterPytorchLite.load(filePath);
+      return _module!;
     } catch (e) {
-      customDebugPrint("Error loading model $assetPath: $e");
+      customDebugPrint('Error loading model $assetPath: $e');
       rethrow;
     }
   }
