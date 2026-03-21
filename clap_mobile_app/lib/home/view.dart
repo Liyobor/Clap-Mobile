@@ -90,18 +90,18 @@ class HomePage extends StatelessWidget {
                               style: Theme.of(context).textTheme.bodyLarge,
                             ),
                             const SizedBox(height: 12),
-                            Row(
-                              children: [
-                                const Icon(Icons.person, size: 18, color: Colors.white54),
-                                const SizedBox(width: 8),
-                                const Icon(Icons.directions_walk, size: 18, color: Colors.white54),
-                                const Spacer(),
-                                Text(
-                                  "Confidence: ${logic.confidence.value}%",
-                                  style: Theme.of(context).textTheme.labelLarge,
-                                ),
-                              ],
-                            ),
+                            // Row(
+                            //   children: [
+                            //     const Icon(Icons.person, size: 18, color: Colors.white54),
+                            //     const SizedBox(width: 8),
+                            //     const Icon(Icons.directions_walk, size: 18, color: Colors.white54),
+                            //     const Spacer(),
+                            //     Text(
+                            //       "Confidence: ${logic.confidence.value}%",
+                            //       style: Theme.of(context).textTheme.labelLarge,
+                            //     ),
+                            //   ],
+                            // ),
                           ],
                         ),
                       ),
