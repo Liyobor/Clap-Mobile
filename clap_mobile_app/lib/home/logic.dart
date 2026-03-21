@@ -3,7 +3,8 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:taudio/public/fs/flutter_sound.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:taudio/taudio.dart';
 import '../services/model_holder.dart';
 import '../utils.dart';
 
@@ -44,7 +45,15 @@ class HomeLogic extends GetxController {
   }
 
   Future<void> startRecording() async {
+    // Check and request microphone permission
+    var status = await Permission.microphone.request();
+    if (status != PermissionStatus.granted) {
+      statusText.value = "Mic Denied";
+      return;
+    }
+
     if (_recorder == null || !_recorder!.isStopped) return;
+
 
     try {
       final Directory tempDir = await getTemporaryDirectory();
