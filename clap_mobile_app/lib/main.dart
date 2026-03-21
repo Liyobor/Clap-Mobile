@@ -1,5 +1,6 @@
 import 'package:clap_mobile_app/home/view.dart';
 import 'package:clap_mobile_app/services/model_holder.dart';
+import 'package:clap_mobile_app/services/tokenizer_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,7 @@ Future<void> main() async {
     // DeviceOrientation.portraitDown,
   ]);
   Get.put(ModelHolder());
+  await Get.putAsync<TokenizerService>(() => TokenizerService().init());
   runApp(const MyApp());
 }
 

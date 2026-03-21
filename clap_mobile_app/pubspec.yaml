@@ -66,6 +66,7 @@ flutter:
 
   assets:
     - assets/model/clap_caption_mobile.ptl
+    - assets/tokenizer_files/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

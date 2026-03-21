@@ -4,12 +4,14 @@ import 'dart:typed_data';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:clap_mobile_app/services/tokenizer_service.dart';
 import 'package:taudio/taudio.dart';
 import '../services/model_holder.dart';
 import '../utils.dart';
 
 class HomeLogic extends GetxController {
   final ModelHolder _holder = Get.find();
+  final TokenizerService _tokenizer = Get.find();
   FlutterSoundRecorder? _recorder;
 
   final RxBool isRecording = false.obs;
@@ -132,20 +134,20 @@ class HomeLogic extends GetxController {
       }
 
       // Inference
-      final result = await _holder.inference(floatData);
+      final resultIValue = await _holder.inference(floatData);
 
-      // Handle Result (Assuming toString() gives a meaningful representation if not handled otherwise)
-      // Ideally we would inspect the IValue type here.
-      String rawResult = result.toString();
-      customDebugPrint("Model Output: $rawResult");
+      // Extract tokens from IValue
+      // Based on example.py, the model returns a tensor of token IDs
+      final tensor = resultIValue.toTensor();
+      final Int64List tokenIds = tensor.dataAsInt64List;
       
-      // Basic cleanup if the model returns something wrapper-like
-      if (rawResult.startsWith("IValue(")) {
-        // Try to extract content if possible, or just display raw for debugging
-      }
-
-      resultText.value = rawResult;
-      confidence.value = 95.0; // Mock confidence as model might not return it
+      customDebugPrint("Model Output Token IDs: $tokenIds");
+      
+      // Decode using TokenizerService
+      String decodedText = _tokenizer.decode(tokenIds.toList());
+      
+      resultText.value = decodedText.capitalizeFirst ?? decodedText;
+      confidence.value = 95.0; // Mock confidence
       statusText.value = "Done";
 
     } catch (e) {
