@@ -40,8 +40,8 @@ migrate_working_dir/
 .flutter-plugins-dependencies
 .pub-cache/
 .pub/
-/build/
-/coverage/
+clap_mobile_app/build/
+clap_mobile_app/coverage/
 
 # Symbolication related
 app.*.symbols
@@ -50,6 +50,8 @@ app.*.symbols
 app.*.map.json
 
 # Android Studio will place build artifacts here
-/android/app/debug
-/android/app/profile
-/android/app/release
+clap_mobile_app/android/app/debug
+clap_mobile_app/android/app/profile
+clap_mobile_app/android/app/release
+
+/clap_mobile_app/UI.png

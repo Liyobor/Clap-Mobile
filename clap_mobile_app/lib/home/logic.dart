@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
-class HomeLogic extends GetxController {
+import '../services/model_holder.dart';
 
+class HomeLogic extends GetxController {
+  final ModelHolder holder = Get.find();
 }
