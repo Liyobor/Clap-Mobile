@@ -16,15 +16,18 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: const Color(0xff121b28),
         textTheme: const TextTheme(
             displayLarge: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-                color: Color(0xff3e3a39)),
-            bodyLarge: TextStyle(fontSize: 18, color: Color(0xff3e3a39))
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.5,
+                color: Colors.white),
+            bodyLarge: TextStyle(fontSize: 18, color: Colors.white),
+            labelLarge: TextStyle(fontSize: 14, color: Colors.white70)
         ),
         fontFamily: 'Inter',
-        brightness: Brightness.light,
         fontFamilyFallback: const ['NotoSansTC'],
       ),
       home: HomePage(),
