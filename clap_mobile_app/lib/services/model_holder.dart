@@ -24,10 +24,10 @@ class ModelHolder extends ModelCore {
     try {
       final shape = Int64List.fromList([1, (44100 * 7).toInt()]);
       final tensor = Tensor.fromBlobFloat32(input, shape);
-      final listIValue = IValue.listFrom(<Tensor>[tensor]);
-      return await _module!.forward([listIValue]);
+      // Directly pass the tensor as a single IValue argument
+      return await _module!.forward([IValue.from(tensor)]);
     } catch(e){
-      print("error : $e");
+      customDebugPrint("Inference error : $e");
       rethrow;
     }
 

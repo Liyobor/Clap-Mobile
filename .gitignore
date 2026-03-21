@@ -8,6 +8,7 @@
 /CLAP/test_audio
 
 
+
 # Miscellaneous
 *.class
 *.log
@@ -55,3 +56,4 @@ clap_mobile_app/android/app/profile
 clap_mobile_app/android/app/release
 
 /clap_mobile_app/UI.png
+/clap_mobile_app/error.md
