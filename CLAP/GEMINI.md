@@ -52,10 +52,3 @@
 5.  **導出與優化**:
     - 執行 `torch.utils.mobile_optimizer.optimize_for_mobile`。
     - 儲存為 `.ptl` 格式。
-
-## 待辦事項
-- [ ] 實作 `ClapcapForJit` 類別。
-- [ ] 遷移 `CLAPWrapper` 中的生成邏輯至 `ClapcapForJit`。
-- [ ] 處理 GPT-2 的 `transformers` 相容性問題。
-- [ ] 撰寫導出腳本 `export_jit.py`。
-- [ ] 在邊緣裝置環境驗證模型加載。
